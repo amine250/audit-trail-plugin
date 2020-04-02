@@ -88,8 +88,7 @@ public class AuditTrailFilter implements Filter {
             uri = req.getPathInfo();
         }
         // Add query string parameters to 'uri' variable
-        String queryString = req.getQueryString();
-        uri = uri.append(queryString).toString();
+        uri += "?" + req.getQueryString();
         
         if (uriPattern != null && uriPattern.matcher(uri).matches()) {
             User user = User.current();
@@ -104,7 +103,7 @@ public class AuditTrailFilter implements Filter {
                 // it looks to me we should always log the query parameters
                 // could we leak sensitive data?  There shouldn't be any in a query parameter...except for a badly coded plugin
                 // let's see if this becomes a wanted feature...
-                uri += "?" + req.getQueryString();
+                //uri += "?" + req.getQueryString();
             }
 
             if (LOGGER.isLoggable(Level.FINE))
