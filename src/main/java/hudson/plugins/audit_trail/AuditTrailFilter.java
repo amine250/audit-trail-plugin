@@ -87,6 +87,10 @@ public class AuditTrailFilter implements Filter {
         } else {
             uri = req.getPathInfo();
         }
+        // Add query string parameters to 'uri' variable
+        String queryString = req.getQueryString();
+        uri = uri.append(queryString).toString();
+        
         if (uriPattern != null && uriPattern.matcher(uri).matches()) {
             User user = User.current();
             String username = user != null ? user.getId() : req.getRemoteAddr();
